@@ -17,17 +17,10 @@ goals = {
 }
 
 def month_index(request):
-   list_items = ""
-   month_keys_list = next_month = list(goals.keys())
-
-   for month in month_keys_list:
-      list_items += f'''<li><a href="/challenges/{month}">{month.capitalize()}</a></li>'''
-   
-   return HttpResponse(f'''
-          <ul>
-            {list_items}
-          </ul> 
-''')
+   month_keys_list = list(goals.keys())
+   return HttpResponse(render(request, 'challenges/index.html', {
+      "months": month_keys_list
+   }))
 
 def monthly_challanges(request, month):
     
@@ -44,7 +37,7 @@ def monthly_challanges(request, month):
               else:
                  next_month = month_keys_list[next_month_index]
        response_Data = render(request, "challenges/challenge.html", {
-          'month': month.capitalize(),
+          'month': month,
           'response': response,
           'next_month' : next_month
        })
