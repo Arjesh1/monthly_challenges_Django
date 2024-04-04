@@ -17,8 +17,20 @@ goals = {
 }
 
 def monthly_challanges(request, month):
+    
     try:
        response = goals[month]
+       next_month = ''
+       month_keys_list = next_month = list(goals.keys())
+       for index, (key, value) in enumerate(goals.items()):
+           if key == month:
+              next_month_index = index  + 1
+              print(next_month_index)
+              if next_month_index >= 12:
+                 next_month = 'january'
+              else:
+                 next_month = month_keys_list[next_month_index]
+
        html = f'''<html lang="en">
 
 <head>
@@ -74,7 +86,7 @@ def monthly_challanges(request, month):
       text-decoration: none;
       color: #333333;
       border-radius: .25rem;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.808);
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.808)
     }}
   </style>
 </head>
@@ -83,6 +95,7 @@ def monthly_challanges(request, month):
   <div class="container">
     <h1>{month} goal</h1>
     <h2>{response}</h2>
+    <p><a href={next_month}>Next {next_month.capitalize()}</a></p>
   </div>
 </body>
 
