@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseNotFound
+from django.http import Http404, HttpResponseNotFound, HttpResponse
+from django.template.loader import render_to_string
 
 goals = {
     "january": "Read 5 books",
@@ -23,7 +24,6 @@ def month_index(request):
    }))
 
 def monthly_challanges(request, month):
-    
     try:
        response = goals[month]
        next_month = ''
@@ -41,8 +41,7 @@ def monthly_challanges(request, month):
           'response': response,
           'next_month' : next_month
        })
-    except Exception as e: 
-        print(e)
-        return HttpResponseNotFound('This month is not supported!')
-
+    except Exception as e:
+         print(e) 
+         raise Http404()
     return HttpResponse(response_Data)
