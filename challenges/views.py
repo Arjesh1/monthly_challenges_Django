@@ -16,6 +16,19 @@ goals = {
     "december": "Spend quality time with family"
 }
 
+def month_index(request):
+   list_items = ""
+   month_keys_list = next_month = list(goals.keys())
+
+   for month in month_keys_list:
+      list_items += f'''<li><a href="/challenges/{month}">{month.capitalize()}</a></li>'''
+   
+   return HttpResponse(f'''
+          <ul>
+            {list_items}
+          </ul> 
+''')
+
 def monthly_challanges(request, month):
     
     try:
@@ -25,7 +38,7 @@ def monthly_challanges(request, month):
        for index, (key, value) in enumerate(goals.items()):
            if key == month:
               next_month_index = index  + 1
-              print(next_month_index)
+
               if next_month_index >= 12:
                  next_month = 'january'
               else:
